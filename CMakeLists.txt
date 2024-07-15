@@ -14,9 +14,9 @@ set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 project ("SR1" VERSION ${PROJECT_VERSION})
 
 
-set (BOOST_ROOT "C:/local/boost_1_85_0/")
-SET (BOOST_INCLUDEDIR "C:/local/boost_1_85_0/boost")
-SET (BOOST_LIBRARYDIR "C:/local/boost_1_85_0/stage/lib")
+#set (BOOST_ROOT "C:/local/boost_1_85_0/")
+#SET (BOOST_INCLUDEDIR "C:/local/boost_1_85_0/boost")
+#SET (BOOST_LIBRARYDIR "C:/local/boost_1_85_0/stage/lib")
 
 set(Boost_USE_STATIC_LIBS ON) 
 set(Boost_USE_MULTITHREADED ON)  

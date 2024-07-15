@@ -1,4 +1,4 @@
-name: 'C++ CI'
+name: 'SR1'
 
 on:
   push:

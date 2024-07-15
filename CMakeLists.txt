@@ -55,10 +55,20 @@ target_link_libraries(helloworldcli PRIVATE helloworld)
 
 install(TARGETS helloworldcli RUNTIME DESTINATION bin)
 
+set(CPACK_GENERATOR DEB)
+
+set(CPACK_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+
+include(CPACK)
+
+
 
 enable_testing()
 
 add_test(test_version test_version)
+
 
 
 #configure_file(version.h.in version.h)

@@ -1,5 +1,6 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
+
 # Включение горячей перезагрузки для компиляторов MSVC, если поддерживается.
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
@@ -10,26 +11,35 @@ endif()
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
-set (Boost_NO_SYSTEM_PATHS ON)
-set (Boost_USE_MULTITHREADED ON)
-set (Boost_USE_STATIC_LIBS ON)
-set (Boost_USE_STATIC_RUNTIME OFF)
-set (BOOST_ALL_DYN_LINK OFF)
-
-
-#set (BOOST_ROOT "C:/libraries/boost_1_82_0")
-
-
 project ("SR1" VERSION ${PROJECT_VERSION})
+
+
+set (BOOST_ROOT "C:/local/boost_1_85_0/")
+SET (BOOST_INCLUDEDIR "C:/local/boost_1_85_0/boost")
+SET (BOOST_LIBRARYDIR "C:/local/boost_1_85_0/stage/lib")
+
+set(Boost_USE_STATIC_LIBS ON) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF)
  
 find_package(Boost REQUIRED COMPONENTS unit_test_framework REQUIRED)
-#include_directories(${Boost_INCLUDE_DIRS})
+
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
 
 configure_file(version.h version.h)
 
 add_executable(helloworldcli main.cpp)
 add_library(helloworld lib.cpp)
+
+
 add_executable(test_version test_version.cpp)
+set_target_properties(test_version PROPERTIES COMPILE_DEFINITIONS BOOST_TEST_NO_LIB)
+target_include_directories(test_version PUBLIC ${Boost_INCLUDE_DIRS})
+target_link_libraries(test_version
+    ${Boost_LIBRARIES}
+    helloworld)
+
 
 
 set_target_properties(helloworldcli helloworld test_version PROPERTIES
@@ -40,6 +50,8 @@ set_target_properties(helloworldcli helloworld test_version PROPERTIES
 target_include_directories(helloworld PRIVATE "${CMAKE_BINARY_DIR}")
 
 target_link_libraries(helloworldcli PRIVATE helloworld)
+
+
 
 install(TARGETS helloworldcli RUNTIME DESTINATION bin)
 
